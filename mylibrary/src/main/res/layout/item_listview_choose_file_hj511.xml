@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:gravity="center_vertical"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_word"
+        android:id="@+id/typeIcon_imageView_hj511"
+        android:layout_weight="1"
+        />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_word"
+        android:layout_weight="8"
+        android:padding="5dp"
+        android:text="我是一个测试文档.docx"
+        android:id="@+id/textView_hj511"
+        />
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_outline_cancel_24"
+        android:layout_weight="1"
+        android:id="@+id/cancelIcon_imageView_hj511"
+        />
+</LinearLayout>
