@@ -208,6 +208,7 @@ public class ChooseDocumentView extends LinearLayout{
                 e.printStackTrace();
             }
         }
+
     }
     private File createImageFile(String suffix,String fileDisplayName) throws IOException {
         int lastIndex=fileDisplayName.lastIndexOf(".");
