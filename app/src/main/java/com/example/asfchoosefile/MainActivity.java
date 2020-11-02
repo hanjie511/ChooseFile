@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         chooseDocumentView.handleRequestPermissionsResult(requestCode,permissions,grantResults);
     }
     public void downLoadFile(View v){
-        chooseDocumentView.openFileByUrl("https://hanjie-oos.oss-cn-shenzhen.aliyuncs.com/%E5%B7%A5%E4%BD%9C%E4%BA%A4%E6%8E%A5%E6%B8%85%E5%8D%95.docx");
+        chooseDocumentView.openFileByUrl("https://hanjie-oos.oss-cn-shenzhen.aliyuncs.com/%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.docx");
     }
     public void openUri(View v){
         chooseDocumentView.openFileByUri(MainActivity.this, Uri.parse("content://com.android.externalstorage.documents/document/primary%3AAndroid%2Fdata%2Fcom.tencent.mm%2FMicroMsg%2FDownload%2F%E6%B7%B1%E5%9C%B3%E9%A1%B9%E7%9B%AE%E8%BF%9B%E5%BA%A6.docx"));

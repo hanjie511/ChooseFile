@@ -6,9 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="开始下载网络文件"
+        android:onClick="downLoadFile"
+        />
     <com.example.mylibrary.ChooseDocumentView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/chooseDocumentView"
         />
+
 </LinearLayout>
