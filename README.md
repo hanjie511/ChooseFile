@@ -1,2 +1,2 @@
 # ChooseFile
-Android系统的文件选择和查看
+Android系统的文件选择和查看;在app进行先择文档的libary,通过接入TBS服务实现在app内部查看文档。
