@@ -68,6 +68,18 @@ chooseDocumentView.setFileChangedListener(new ChooseDocumentView.FileChangedList
     chooseDocumentView.handleRequestPermissionsResult(requestCode,permissions,grantResults);
     }
 ```  
+* Step3 在引用项目的AndroidManifest.xml的application节点下添加provider  
+```java  
+<provider
+  android:name="androidx.core.content.FileProvider"
+  android:authorities="${applicationId}.provider"
+  android:exported="false"
+  android:grantUriPermissions="true">
+   <meta-data
+     android:name="android.support.FILE_PROVIDER_PATHS"
+     android:resource="@xml/file_path" />
+   </provider>
+```
 ### 通过以上步骤，就可以实现在app选择文档和查看文档的功能啦。
 ## 封装的一些其他的方法（如果你不想使用选择文件的控件，你只想实现在app内查看文档，这些方法可能会帮到你）
 #### openFileByUrl(String netWorkURL);//通过网络链接直接打开网络文档  
