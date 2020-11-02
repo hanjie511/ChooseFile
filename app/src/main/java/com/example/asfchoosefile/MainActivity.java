@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.example.mylibrary.ChooseDocumentView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     // https://hanjie-oos.oss-cn-shenzhen.aliyuncs.com/%E5%B7%A5%E4%BD%9C%E4%BA%A4%E6%8E%A5%E6%B8%85%E5%8D%95.docx
     private ChooseDocumentView chooseDocumentView;
@@ -25,6 +27,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         chooseDocumentView.handleActivityResult(requestCode,resultCode,data);
+        chooseDocumentView.setFileChangedListener(new ChooseDocumentView.FileChangedListener() {
+            @Override
+            public void getPathList(List<String> pathList) {
+
+            }
+        });
     }
 
     @Override
