@@ -63,7 +63,7 @@ chooseDocumentView.setFileChangedListener(new ChooseDocumentView.FileChangedList
     }
 
   @Override
-  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {//onRequestPermissionsResult
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {//重写onRequestPermissionsResult
     super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     chooseDocumentView.handleRequestPermissionsResult(requestCode,permissions,grantResults);
     }
