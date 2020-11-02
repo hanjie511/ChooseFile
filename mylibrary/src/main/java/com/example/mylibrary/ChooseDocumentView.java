@@ -2,6 +2,7 @@ package com.example.mylibrary;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,6 +20,8 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,6 +37,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,6 +55,8 @@ public class ChooseDocumentView extends LinearLayout{
     private String currentFilePath="";
     public final int REQUEST_PERMISSION_CODE=100;
     private FileChangedListener fileChangedListener;
+    private ProgressBar progressBar;
+    private TextView progressText;
     public ChooseDocumentView(Context context) {
         super(context);
         this.context=context;
@@ -163,6 +169,7 @@ public class ChooseDocumentView extends LinearLayout{
      * @param uri
      */
     private void getChooseFilePath(Uri uri){
+        System.out.println("uri:"+uri);
         String suffix="";
         InputStream fis = null;
         OutputStream fos = null;
@@ -228,6 +235,89 @@ public class ChooseDocumentView extends LinearLayout{
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("application/*");
         activity.startActivityForResult(intent, 101);
+    }
+    public void openFileByUri(Context context,Uri uri){
+        String suffix="";
+        InputStream fis = null;
+        OutputStream fos = null;
+        try {
+            String uriStr=uri.toString();
+            int lastIndex=uri.toString().lastIndexOf(".");
+            suffix=(String) uriStr.subSequence(lastIndex, uriStr.length());
+            fis = context.getContentResolver().openInputStream(uri);
+            Cursor cursor=context.getContentResolver().query(uri,new String[]{MediaStore.Files.FileColumns.DISPLAY_NAME,MediaStore.Files.FileColumns.TITLE},null,null,null);
+            String displayName="";
+            if(cursor!=null){
+                while(cursor.moveToNext()){
+                    displayName=cursor.getString(cursor.getColumnIndex(MediaStore.Files.FileColumns.DISPLAY_NAME));
+                }
+            }
+            System.out.println("displayName:"+displayName);
+            fos = new FileOutputStream(createImageFile(suffix,displayName));
+            byte[] buf = new byte[4096];
+            int i;
+            while ((i = fis.read(buf)) != -1) {
+                fos.write(buf, 0, i);
+            }
+            openFileByAbsolutePath(context,currentFilePath);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fis.close();
+                fos.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
+    public void openFileByAbsolutePath(Context context,String path){
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("local", "true");
+        JSONObject Object = new JSONObject();
+        try
+        {
+            Object.put("pkgName",context.getApplicationContext().getPackageName());
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        params.put("menuData",Object.toString());
+        QbSdk.getMiniQBVersion(context);
+        int ret = QbSdk.openFileReader(context, path, params, new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String s) {
+
+            }
+        });
+    }
+    public void openFileByUrl(String netUrl){
+        MyDownloadThread myDownloadThread=new MyDownloadThread(context,netUrl);
+        myDownloadThread.execute();
+    }
+    public static void downLoad(String path,Context context)throws Exception
+    {
+        URL url = new URL(path);
+        InputStream is = url.openStream();
+        int totalLength=url.openConnection().getContentLength();
+        System.out.println("totalLength:"+totalLength);
+        //截取最后的文件名
+        String end = path.substring(path.lastIndexOf("."));
+        //打开手机对应的输出流,输出到文件中
+        OutputStream os = context.openFileOutput("Cache_"+System.currentTimeMillis()+end, Context.MODE_PRIVATE);
+        byte[] buffer = new byte[1024];
+        int len = 0;
+        //从输入六中读取数据,读到缓冲区中
+        while((len = is.read(buffer)) > 0)
+        {
+            os.write(buffer,0,len);
+        }
+        //关闭输入输出流
+        is.close();
+        os.close();
     }
     public interface FileChangedListener{
         void getPathList(List<String> pathList);
