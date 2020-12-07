@@ -87,6 +87,7 @@ chooseDocumentView.setFileChangedListener(new ChooseDocumentView.FileChangedList
 #### openFileByAbsolutePath(String absolutePath);//通过本地文档的绝对路径直接打开本地文档
 #### eg:  
 ```java  
+ChooseDocumentView chooseDocumentView=new ChooseDocumentView(MainActivity.this);
 public void downLoadFile(View v){
    chooseDocumentView.openFileByUrl("https://hanjie-oos.oss-cn-shenzhen.aliyuncs.com/%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.docx");
     }
